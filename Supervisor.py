@@ -35,7 +35,8 @@ def Supervisor(D,graph=None):
     get_W = df.get_w(graph,"W_global")
 
 
-    with tf.Session() as sess:
+    with tf.Session(config=tf.ConfigProto(
+    intra_op_parallelism_threads=1)) as sess:
         #Initialize TF variables
         sess.run([init])
         tf.train.start_queue_runners(sess=sess)

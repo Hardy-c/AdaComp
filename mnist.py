@@ -70,12 +70,12 @@ def _generate_image_and_label_batch(image, label, min_queue_examples,
                   num_threads=num_preprocess_threads,
                   capacity=min_queue_examples + 3 * batch_size,
                   min_after_dequeue=min_queue_examples)
-      else:
+      else: # Test dataset
             images, label_batch = tf.train.batch(
                   [image, label],
                   batch_size=batch_size,
                   num_threads=num_preprocess_threads,
-                  capacity=min_queue_examples + 3 * batch_size)
+                  capacity=10000)
         
       
 
@@ -102,7 +102,7 @@ def distorted_inputs(data_dir, batch_size, start,stop):
     float_image = tf.image.per_image_standardization(reshaped_image)
     
     # Ensure that the random shuffling has good mixing properties.
-    min_fraction_of_examples_in_queue = 0.4/100
+    min_fraction_of_examples_in_queue = 0.2/100
     min_queue_examples = int(NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN *
                              min_fraction_of_examples_in_queue)
     print ('Filling queue with %d MNIST images before starting to train. '
