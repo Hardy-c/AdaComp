@@ -18,7 +18,7 @@ AdaComp is a method to distribute stochastic gradient descent (SGD) onto a large
 ## Getting Started
 
 This code has to be placed on different interconnected computational nodes:
-- One of them has the role of PS. It communicates with every other nodes to maintain a central model.
+- One of them has the role of the PS. It communicates with every other nodes to maintain a central model.
 - By default, other nodes are workers. They compute updates for the the central model using their local data. Updates are compressed before sending. 
 - Optionally, an other node could have the role of Supervisor. It contains a test dataset with which it computes the accuracy of the central model.
 
