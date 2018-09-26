@@ -103,3 +103,8 @@ For clarity reasons, the code of the PS has been simplified to use only one thre
 ## Author
 
 * Corentin Hardy
+
+
+## License
+
+Released under the 3-Clause BSD license
