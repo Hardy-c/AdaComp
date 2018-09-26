@@ -41,13 +41,13 @@ def recv_msg(sock):
 # Float class with inverse ordering
 class backwards(float):
     def __lt__(self, other):
-        return not float.__le__(abs(self), abs(other))
+        return float.__lt__(abs(self), abs(other))
     def __le__(self, other):
-        return not float.__lt__(abs(self), abs(other))
+        return float.__le__(abs(self), abs(other))
     def __gt__(self, other):
-        return not float.__ge__(abs(self), abs(other))
+        return float.__gt__(abs(self), abs(other))
     def __ge__(self, other):
-        return not float.__gt__(abs(self), abs(other))
+        return float.__ge__(abs(self), abs(other))
 
 
 def encode_variables(sess,collection,iteration,compression=1):
@@ -59,10 +59,13 @@ def encode_variables(sess,collection,iteration,compression=1):
             value = sess.run(var).flatten()
             nb_samples = int(max(1,len(value)*compression))
             heapqueue = []
-            for i in range(len(value)):
+            for i in range(len(nb_samples)):
                 heapq.heappush(heapqueue,(backwards(value[i]),i))
+            for i in range(nb_samples,len(value)):
+                heapq.heappushpop(heapqueue,(backwards(value[i]),i))
+
             values, indices = [],[]
-            for j in range(nb_samples):
+            for j in range(nb_samples,len(value)):
                 v,ind = heapq.heappop(heapqueue)
                 values.append(v)
                 indices.append(ind)
